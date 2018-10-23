@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context=".VideoPlayer">
+    tools:context="com.vicky.mediaplayer.activities.VideoPlayer">
 
     <VideoView
         android:id="@+id/videoView"

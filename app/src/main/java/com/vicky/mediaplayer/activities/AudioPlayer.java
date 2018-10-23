@@ -1,4 +1,4 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.vicky.mediaplayer.fragments.MediaPlayerHolder;
+import com.vicky.mediaplayer.fragments.PlaybackInfoListener;
+import com.vicky.mediaplayer.fragments.PlayerAdapter;
+import com.vicky.mediaplayer.fragments.R;
 
 public class AudioPlayer extends AppCompatActivity {
 

@@ -1,6 +1,5 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.fragments;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;

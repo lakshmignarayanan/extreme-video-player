@@ -1,8 +1,7 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.io.IOException;
+import com.vicky.mediaplayer.activities.AudioPlayer;
+import com.vicky.mediaplayer.activities.AudioRecorder;
+import com.vicky.mediaplayer.activities.VideoPlayer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MyViewHolder
             public void onClick(View view) {
                 if (mediaItem.type == 1) {
                     //Video click
-                    Log.i("lucky123", "video onclick uri => " + mediaItem.uri);
+                    Log.i("lucky123", "video onclick uri => " + mediaItem.title);
                     // TODO
                     goToVideoPlayerAndStart(mediaItem);
                 } else if (mediaItem.type == 2) {

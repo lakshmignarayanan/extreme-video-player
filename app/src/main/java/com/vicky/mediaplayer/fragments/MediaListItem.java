@@ -1,6 +1,4 @@
-package com.vicky.mediaplayer.mediaplayer;
-
-import android.view.View;
+package com.vicky.mediaplayer.fragments;
 
 public class MediaListItem {
     public String title;

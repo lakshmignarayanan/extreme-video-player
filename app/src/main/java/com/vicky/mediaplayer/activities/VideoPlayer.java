@@ -1,10 +1,12 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.activities;
 
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
+import com.vicky.mediaplayer.fragments.R;
 
 public class VideoPlayer extends AppCompatActivity {
 
@@ -15,9 +17,10 @@ public class VideoPlayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
         uri = getIntent().getStringExtra("uri");
+        startVideo(uri);
     }
 
-    public void startVideo(String location) {
+    public void startVideo(String uri) {
         VideoView videoView = (VideoView) findViewById(R.id.videoView);
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);

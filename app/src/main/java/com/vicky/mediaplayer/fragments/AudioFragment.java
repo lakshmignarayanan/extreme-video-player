@@ -1,4 +1,4 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.fragments;
 
 import android.os.Bundle;
 import android.os.Environment;

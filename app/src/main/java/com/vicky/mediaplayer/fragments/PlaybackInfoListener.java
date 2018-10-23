@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.fragments;
 
 import android.support.annotation.IntDef;
+
+import com.vicky.mediaplayer.activities.MainActivity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -29,7 +31,7 @@ public abstract class PlaybackInfoListener {
 
     @IntDef({State.INVALID, State.PLAYING, State.PAUSED, State.RESET, State.COMPLETED})
     @Retention(RetentionPolicy.SOURCE)
-    @interface State {
+    public @interface State {
 
         int INVALID = -1;
         int PLAYING = 0;
@@ -62,18 +64,20 @@ public abstract class PlaybackInfoListener {
         return stateString;
     }
 
-    void onLogUpdated(String formattedMessage) {
+    public void onLogUpdated(String formattedMessage) {
     }
 
-    void onDurationChanged(int duration) {
+    public void onDurationChanged(int duration) {
     }
 
-    void onPositionChanged(int position) {
+    public void onPositionChanged(int position) {
     }
 
-    void onStateChanged(@State int state) {
+    public void onStateChanged(@State int state) {
     }
 
-    void onPlaybackCompleted() {
+    public void onPlaybackCompleted() {
     }
+
+//    void onDurationChanged
 }
