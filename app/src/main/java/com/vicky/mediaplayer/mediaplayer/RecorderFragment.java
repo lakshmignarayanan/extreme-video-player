@@ -3,10 +3,16 @@ package com.vicky.mediaplayer.mediaplayer;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.io.File;
+import java.util.ArrayList;
 
 
 /**
@@ -28,6 +34,8 @@ public class RecorderFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView mRecyclerView;
 
     public RecorderFragment() {
         // Required empty public constructor
@@ -63,8 +71,42 @@ public class RecorderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recorder, container, false);
+        View view = inflater.inflate(R.layout.fragment_recorder, container, false);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.records_list);
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        MediaAdapter adapter = new MediaAdapter(getActivity(), getPlayList(Environment.getExternalStorageDirectory().getAbsolutePath()));
+        mRecyclerView.setAdapter(adapter);
+        return view;
+    }
+
+    ArrayList<MediaListItem> getPlayList(String rootPath) {
+        ArrayList<MediaListItem> fileList = new ArrayList<>();
+
+
+        try {
+            File rootFolder = new File(rootPath);
+            File[] files = rootFolder.listFiles(); //here you will get NPE if directory doesn't contains  any file,handle it like this.
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    if (getPlayList(file.getAbsolutePath()) != null) {
+                        fileList.addAll(getPlayList(file.getAbsolutePath()));
+                    } else {
+                        break;
+                    }
+                } else if (file.getName().endsWith(".3gp")) {
+                    MediaListItem mediaListItem = new MediaListItem();
+                    mediaListItem.title = file.getName();
+                    mediaListItem.uri = file.getAbsolutePath();
+                    mediaListItem.type = 3;
+                    fileList.add(mediaListItem);
+                }
+            }
+            return fileList;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 

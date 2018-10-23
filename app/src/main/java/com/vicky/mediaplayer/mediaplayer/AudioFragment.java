@@ -41,7 +41,7 @@ public class AudioFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_audio, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.video_list);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.audio_list);
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

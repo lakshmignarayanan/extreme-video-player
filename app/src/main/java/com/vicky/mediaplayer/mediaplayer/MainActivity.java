@@ -1,5 +1,6 @@
 package com.vicky.mediaplayer.mediaplayer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -28,12 +29,19 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.navigation_notifications:
                     fragment = new RecorderFragment();
+//                    goToAudioRecorderActivity();
                     break;
             }
 
             return loadFragment(fragment);
         }
     };
+
+    private void goToAudioRecorderActivity() {
+        Intent i = new Intent();
+        i.setClass(this, AudioRecorder.class);
+        startActivity(i);
+    }
 
 
     private boolean loadFragment(Fragment fragment) {

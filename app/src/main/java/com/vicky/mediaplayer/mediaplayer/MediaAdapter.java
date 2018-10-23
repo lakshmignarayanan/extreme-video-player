@@ -57,13 +57,14 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MyViewHolder
                     Log.i("lucky123", "video onclick uri => " + mediaItem.uri);
                     // TODO
                     goToVideoPlayerAndStart(mediaItem);
-                } else {
+                } else if (mediaItem.type == 2) {
                     //Audio click
                     Log.i("lucky123", "audio onclick uri => " + mediaItem.uri);
                     // TODO go to audio player activity
                     goToAudioPlayerActivity(mediaItem);
-
-
+                } else {
+                    Log.i("lucky123", "recorded audio onclick uri => " + mediaItem.uri);
+                    goToAudioRecorderAndList(mediaItem);
                 }
             }
         });
@@ -79,6 +80,12 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MyViewHolder
 
     public void goToVideoPlayerAndStart(MediaListItem item) {
         Intent intent = new Intent(context, VideoPlayer.class);
+        intent.putExtra("uri", item.uri);
+        context.startActivity(intent);
+    }
+
+    public void goToAudioRecorderAndList(MediaListItem item) {
+        Intent intent = new Intent(context, AudioRecorder.class);
         intent.putExtra("uri", item.uri);
         context.startActivity(intent);
     }
