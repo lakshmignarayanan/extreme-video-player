@@ -76,7 +76,7 @@ public class VideoFragment extends Fragment {
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        MediaAdapter adapter = new MediaAdapter(getActivity()getAllMedia());
+        MediaAdapter adapter = new MediaAdapter(getActivity(), getAllMedia());
         mRecyclerView.setAdapter(adapter);
 
         Log.i("video list", getAllMedia().toString());
