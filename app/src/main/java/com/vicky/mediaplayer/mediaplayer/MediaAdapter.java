@@ -80,7 +80,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MyViewHolder
 
     public void goToVideoPlayerAndStart(MediaListItem item) {
         Intent intent = new Intent(context, VideoPlayer.class);
-        intent.putExtra("uri", item.uri);
+        intent.putExtra("uri", item.title);
         context.startActivity(intent);
     }
 
