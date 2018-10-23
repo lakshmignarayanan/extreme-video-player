@@ -1,4 +1,4 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.vicky.mediaplayer.mediaplayer.R;
+
 import java.io.IOException;
 
 public class AudioRecorder extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {

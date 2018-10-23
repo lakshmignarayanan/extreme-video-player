@@ -1,4 +1,4 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.activities;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.vicky.mediaplayer.mediaplayer.R;
 
 import java.io.File;
 import java.util.ArrayList;

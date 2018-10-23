@@ -1,5 +1,6 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.activities;
 
+import android.app.NotificationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,11 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class AudioPlayer extends AppCompatActivity {
+import android.support.v7.app.ActionBarActivity;
+import com.vicky.mediaplayer.uicomponent.Slider;
+import com.vicky.mediaplayer.mediaplayer.R;
+
+public class AudioPlayerBaseActivity extends AppCompatActivity, ActionBarActivity implements View.OnClickListener, Slider.OnValueChagedListener, NotificationManager.NotificationCenterDelegate {
 
     public static final String TAG = "AudioPlayerActivity";
     public static final int MEDIA_RES_ID = R.raw.jazz_in_paris;
@@ -24,7 +29,7 @@ public class AudioPlayer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.audio_player);
+        setContentView(R.layout.audio_player_base_activity);
         uri = getIntent().getStringExtra("uri");
         initializeUI();
         initializeSeekbar();
@@ -115,7 +120,7 @@ public class AudioPlayer extends AppCompatActivity {
 
         @Override
         public void onStateChanged(@State int state) {
-            String stateToString = PlaybackInfoListener.convertStateToString(state);
+            String stateToString = convertStateToString(state);
             onLogUpdated(String.format("onStateChanged(%s)", stateToString));
         }
 
@@ -147,5 +152,10 @@ public class AudioPlayer extends AppCompatActivity {
             mPlayerAdapter.reset();
         }
         mPlayerAdapter.release();
+    }
+
+    @Override
+    public void onClick(View view) {
+        // TODO
     }
 }

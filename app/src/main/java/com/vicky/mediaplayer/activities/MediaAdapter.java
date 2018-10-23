@@ -1,8 +1,7 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.io.IOException;
+import com.vicky.mediaplayer.mediaplayer.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,8 +72,8 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MyViewHolder
     }
 
     public void goToAudioPlayerActivity(MediaListItem media) {
-        Intent intent = new Intent(context, AudioPlayer.class);
-        intent.setClass(context, AudioPlayer.class);
+        Intent intent = new Intent(context, AudioPlayerBaseActivity.class);
+        intent.setClass(context, AudioPlayerBaseActivity.class);
         intent.putExtra("uri", media.uri);
         context.startActivity(intent);
     }

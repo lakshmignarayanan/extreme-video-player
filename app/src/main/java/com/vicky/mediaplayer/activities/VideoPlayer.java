@@ -1,10 +1,12 @@
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.activities;
 
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
+import com.vicky.mediaplayer.mediaplayer.R;
 
 public class VideoPlayer extends AppCompatActivity {
 

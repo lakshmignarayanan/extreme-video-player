@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.vicky.mediaplayer.mediaplayer;
+package com.vicky.mediaplayer.activities;
 
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 
 import java.util.concurrent.Executors;
