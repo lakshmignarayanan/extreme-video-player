@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.vicky.mediaplayer.fragments.MediaPlayerHolder;
 import com.vicky.mediaplayer.fragments.PlaybackInfoListener;
 import com.vicky.mediaplayer.fragments.PlayerAdapter;
-import com.vicky.mediaplayer.fragments.R;
+import com.vicky.mediaplayer.R;
 
 public class AudioPlayer extends AppCompatActivity {
 

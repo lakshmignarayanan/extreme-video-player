@@ -15,6 +15,7 @@ import com.vicky.mediaplayer.activities.VideoPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.vicky.mediaplayer.R;
 
 public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MyViewHolder> {
 
@@ -59,14 +60,11 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MyViewHolder
                     Log.i("lucky123", "video onclick uri => " + mediaItem.title);
                     // TODO
                     goToVideoPlayerAndStart(mediaItem);
-                } else if (mediaItem.type == 2) {
+                } else {
                     //Audio click
                     Log.i("lucky123", "audio onclick uri => " + mediaItem.uri);
                     // TODO go to audio player activity
                     goToAudioPlayerActivity(mediaItem);
-                } else {
-                    Log.i("lucky123", "recorded audio onclick uri => " + mediaItem.uri);
-                    goToAudioRecorderAndList(mediaItem);
                 }
             }
         });

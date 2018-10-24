@@ -1,18 +1,23 @@
 package com.vicky.mediaplayer.fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.io.File;
 import java.util.ArrayList;
-
+import com.vicky.mediaplayer.R;
+import com.vicky.mediaplayer.activities.AudioRecorder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +40,7 @@ public class RecorderFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private RecyclerView mRecyclerView;
+    private ImageButton goto_recorderactivity;
 
     public RecorderFragment() {
         // Required empty public constructor
@@ -60,6 +66,7 @@ public class RecorderFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i("lucky123", "RecorderFragment onCreate called");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -70,14 +77,27 @@ public class RecorderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("lucky123", "RecorderFragment onCreateView called");
         View view = inflater.inflate(R.layout.fragment_recorder, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.records_list);
+        goto_recorderactivity = (ImageButton) view.findViewById(R.id.button_recordactivity);
+        initUI();
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         MediaAdapter adapter = new MediaAdapter(getActivity(), getPlayList(Environment.getExternalStorageDirectory().getAbsolutePath()));
         mRecyclerView.setAdapter(adapter);
         return view;
+    }
+
+    private void initUI() {
+        goto_recorderactivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), AudioRecorder.class);
+                startActivity(i);
+            }
+        });
     }
 
     ArrayList<MediaListItem> getPlayList(String rootPath) {

@@ -1,5 +1,6 @@
 package com.vicky.mediaplayer.fragments;
 
+import com.vicky.mediaplayer.R;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;

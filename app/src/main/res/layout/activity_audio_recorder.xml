@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="Record"
         android:textSize="20sp"
-        android:id="@+id/record"
+        android:id="@+id/button_record"
         android:layout_below="@id/logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
@@ -27,7 +27,7 @@
         android:text="Stop"
         android:textSize="20sp"
         android:id="@+id/stop"
-        android:layout_below="@id/record"
+        android:layout_below="@id/button_record"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         />

@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.vicky.mediaplayer.fragments.AudioFragment;
-import com.vicky.mediaplayer.fragments.R;
+import com.vicky.mediaplayer.R;
 import com.vicky.mediaplayer.fragments.RecorderFragment;
 import com.vicky.mediaplayer.fragments.VideoFragment;
 
