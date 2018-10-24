@@ -20,6 +20,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 import com.vicky.mediaplayer.activities.MainActivity;
+import com.vicky.mediaplayer.listeners.PlaybackInfoListener;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
