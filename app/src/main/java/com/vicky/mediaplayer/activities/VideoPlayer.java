@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import com.vicky.mediaplayer.fragments.R;
+import com.vicky.mediaplayer.R;
 
 public class VideoPlayer extends AppCompatActivity {
 
