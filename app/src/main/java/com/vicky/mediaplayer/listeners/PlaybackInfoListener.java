@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vicky.mediaplayer.fragments;
+package com.vicky.mediaplayer.listeners;
 
 import android.support.annotation.IntDef;
 

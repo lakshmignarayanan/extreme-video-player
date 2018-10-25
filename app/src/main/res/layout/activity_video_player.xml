@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/overlay"
     android:layout_height="match_parent"
     android:paddingLeft="10dp"
+    android:clickable="true"
     android:paddingRight="10dp"
     tools:context="com.vicky.mediaplayer.activities.VideoPlayer">
 
     <VideoView
         android:id="@+id/videoView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:foregroundGravity="center"/>
 
 </RelativeLayout>
