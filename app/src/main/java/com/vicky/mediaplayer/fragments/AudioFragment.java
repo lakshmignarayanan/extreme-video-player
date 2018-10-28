@@ -2,6 +2,7 @@ package com.vicky.mediaplayer.fragments;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,8 @@ import com.vicky.mediaplayer.R;
 public class AudioFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+    private MediaAdapter adapter;
+    private ArrayList<MediaListItem> mediaListItems = new ArrayList<>();
 
     public AudioFragment() {
         // Required empty public constructor
@@ -45,7 +48,20 @@ public class AudioFragment extends Fragment {
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        MediaAdapter adapter = new MediaAdapter(getActivity(), getPlayList(Environment.getExternalStorageDirectory().getAbsolutePath()));
+        adapter = new MediaAdapter(getActivity(), mediaListItems);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mediaListItems = getPlayList(Environment.getExternalStorageDirectory().getAbsolutePath());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.setMediaList(mediaListItems);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
         mRecyclerView.setAdapter(adapter);
         return view;
     }

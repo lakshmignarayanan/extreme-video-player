@@ -1,8 +1,13 @@
 package com.vicky.mediaplayer.fragments;
 
 import com.vicky.mediaplayer.R;
+
+import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +17,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.reactivestreams.Subscriber;
+
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -67,6 +78,9 @@ public class VideoFragment extends Fragment {
         }
     }
 
+    public ArrayList<MediaListItem> mediaListItems = new ArrayList<>();
+    public MediaAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,9 +91,22 @@ public class VideoFragment extends Fragment {
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        MediaAdapter adapter = new MediaAdapter(getActivity(), getAllMedia());
+        final MediaAdapter adapter = new MediaAdapter(getActivity(), mediaListItems);
         mRecyclerView.setAdapter(adapter);
 
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mediaListItems = getAllMedia();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.setMediaList(mediaListItems);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
         Log.i("video list", getAllMedia().toString());
         return view;
     }
@@ -105,9 +132,46 @@ public class VideoFragment extends Fragment {
                 downloadedList) {
             MediaListItem mediaListItem = new MediaListItem();
             mediaListItem.title = s;
-            mediaListItem.type =  1;
+            mediaListItem.type = 1;
             listItems.add(mediaListItem);
         }
         return listItems;
     }
+
+
+//    public <T> Observable<T> queryInBackground(
+//            final ContentResolver cr,
+//            final Uri uri,
+//            final String[] projection,
+//            final String selection,
+//            final String[] selectionArgs,
+//            final String sortOrder,
+//            final CursorHandler<T> ch) {
+//        return Observable.create(new Observable.OnSubscribe<T>() {
+//            @Override
+//            public void call(Subscriber<? super T> observer) {
+//                if (!observer.isUnsubscribed()) {
+//                    Cursor cursor = null;
+//                    try {
+//                        cursor = cr.query(uri, projection, selection, selectionArgs, sortOrder);
+//                        if (cursor != null && cursor.getCount() > 0) {
+//                            while (cursor.moveToNext()) {
+//                                observer.onNext(ch.handle(cursor));
+//                            }
+//                        }
+//                        observer.onCompleted();
+//                    } catch (Exception err) {
+//                        observer.onError(err);
+//
+//                    } finally {
+//                        if (cursor != null) cursor.close();
+//                    }
+//                }
+//            }
+//        }).subscribeOn(Schedulers.io());
+//    }
+//
+//    public interface CursorHandler<T> {
+//        T handle(Cursor cu) throws SQLException;
+//    }
 }
