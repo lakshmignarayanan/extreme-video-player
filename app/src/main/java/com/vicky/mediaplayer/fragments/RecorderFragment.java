@@ -2,6 +2,7 @@ package com.vicky.mediaplayer.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,9 @@ public class RecorderFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private ImageButton goto_recorderactivity;
+
+    private static ArrayList<MediaListItem> mediaListItems = new ArrayList<>();
+    MediaAdapter adapter;
 
     public RecorderFragment() {
         // Required empty public constructor
@@ -85,8 +89,11 @@ public class RecorderFragment extends Fragment {
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        MediaAdapter adapter = new MediaAdapter(getActivity(), getPlayList(Environment.getExternalStorageDirectory().getAbsolutePath()));
+
+        adapter = new MediaAdapter(getActivity(), mediaListItems);
         mRecyclerView.setAdapter(adapter);
+        RecordingAsyncLoader recordingAsyncLoader = new RecordingAsyncLoader();
+        recordingAsyncLoader.execute();
         return view;
     }
 
@@ -142,5 +149,21 @@ public class RecorderFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    class RecordingAsyncLoader extends AsyncTask<Void, Void, ArrayList<MediaListItem>> {
+
+        @Override
+        protected ArrayList<MediaListItem> doInBackground(Void... voids) {
+            ArrayList<MediaListItem> mediaListItems = getPlayList(Environment.getExternalStorageDirectory().getAbsolutePath());
+            return mediaListItems;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<MediaListItem> mediaListItems) {
+            super.onPostExecute(mediaListItems);
+            adapter.setMediaList(mediaListItems);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

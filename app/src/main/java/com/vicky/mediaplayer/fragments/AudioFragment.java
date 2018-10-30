@@ -1,5 +1,6 @@
 package com.vicky.mediaplayer.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import com.vicky.mediaplayer.R;
 
 /**
@@ -25,8 +27,8 @@ import com.vicky.mediaplayer.R;
 public class AudioFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private MediaAdapter adapter;
-    private ArrayList<MediaListItem> mediaListItems = new ArrayList<>();
+    private static MediaAdapter adapter;
+    private static ArrayList<MediaListItem> mediaListItems = new ArrayList<>();
 
     public AudioFragment() {
         // Required empty public constructor
@@ -49,25 +51,14 @@ public class AudioFragment extends Fragment {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         adapter = new MediaAdapter(getActivity(), mediaListItems);
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                mediaListItems = getPlayList(Environment.getExternalStorageDirectory().getAbsolutePath());
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.setMediaList(mediaListItems);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        });
         mRecyclerView.setAdapter(adapter);
+        AudioAsyncLoader audioAsyncLoader = new AudioAsyncLoader();
+        audioAsyncLoader.execute();
         return view;
     }
 
 
-    ArrayList<MediaListItem> getPlayList(String rootPath) {
+    static ArrayList<MediaListItem> getPlayList(String rootPath) {
         ArrayList<MediaListItem> fileList = new ArrayList<>();
 
 
@@ -94,4 +85,21 @@ public class AudioFragment extends Fragment {
             return null;
         }
     }
+
+    public class AudioAsyncLoader extends AsyncTask<Void, Void, ArrayList<MediaListItem>> {
+
+        @Override
+        protected ArrayList<MediaListItem> doInBackground(Void... voids) {
+            ArrayList<MediaListItem> mediaListItems = getPlayList(Environment.getExternalStorageDirectory().getAbsolutePath());
+            return mediaListItems;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<MediaListItem> mediaListItems) {
+            super.onPostExecute(mediaListItems);
+            adapter.setMediaList(mediaListItems);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 }

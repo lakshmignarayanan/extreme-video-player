@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -78,8 +79,8 @@ public class VideoFragment extends Fragment {
         }
     }
 
-    public ArrayList<MediaListItem> mediaListItems = new ArrayList<>();
-    public MediaAdapter adapter;
+    public static ArrayList<MediaListItem> mediaListItems = new ArrayList<>();
+    public static MediaAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,23 +92,10 @@ public class VideoFragment extends Fragment {
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        final MediaAdapter adapter = new MediaAdapter(getActivity(), mediaListItems);
+        adapter = new MediaAdapter(getActivity(), mediaListItems);
         mRecyclerView.setAdapter(adapter);
-
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                mediaListItems = getAllMedia();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.setMediaList(mediaListItems);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        });
-        Log.i("video list", getAllMedia().toString());
+        VideoAsyncLoader videoAsyncLoader = new VideoAsyncLoader();
+        videoAsyncLoader.execute();
         return view;
     }
 
@@ -138,40 +126,20 @@ public class VideoFragment extends Fragment {
         return listItems;
     }
 
+    public class VideoAsyncLoader extends AsyncTask<Void, Void, ArrayList<MediaListItem>> {
 
-//    public <T> Observable<T> queryInBackground(
-//            final ContentResolver cr,
-//            final Uri uri,
-//            final String[] projection,
-//            final String selection,
-//            final String[] selectionArgs,
-//            final String sortOrder,
-//            final CursorHandler<T> ch) {
-//        return Observable.create(new Observable.OnSubscribe<T>() {
-//            @Override
-//            public void call(Subscriber<? super T> observer) {
-//                if (!observer.isUnsubscribed()) {
-//                    Cursor cursor = null;
-//                    try {
-//                        cursor = cr.query(uri, projection, selection, selectionArgs, sortOrder);
-//                        if (cursor != null && cursor.getCount() > 0) {
-//                            while (cursor.moveToNext()) {
-//                                observer.onNext(ch.handle(cursor));
-//                            }
-//                        }
-//                        observer.onCompleted();
-//                    } catch (Exception err) {
-//                        observer.onError(err);
-//
-//                    } finally {
-//                        if (cursor != null) cursor.close();
-//                    }
-//                }
-//            }
-//        }).subscribeOn(Schedulers.io());
-//    }
-//
-//    public interface CursorHandler<T> {
-//        T handle(Cursor cu) throws SQLException;
-//    }
+        @Override
+        protected ArrayList<MediaListItem> doInBackground(Void... voids) {
+            ArrayList<MediaListItem> mediaListItems = getAllMedia();
+            return mediaListItems;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<MediaListItem> mediaListItems) {
+            super.onPostExecute(mediaListItems);
+            adapter.setMediaList(mediaListItems);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 }
